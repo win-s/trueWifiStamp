@@ -1,4 +1,0 @@
-{
-    startDate:1,    //start date and end date of each month
-    wifiHr:10       //wifi avaliable per month
-}
