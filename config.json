@@ -1,4 +1,5 @@
 {
-    startDate:1,    //start date and end date of each month
-    wifiHr:10       //wifi avaliable per month
+    startDate:1,    //start date of each month
+    wifiHr:10,       //wifi avaliable per month
+    dateTimeFormat:"ํDD/MM/YYYY HH:mm:ss" //no timezone
 }
