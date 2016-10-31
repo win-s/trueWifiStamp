@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "json-parser": "^1.1.5",
     "moment": "^2.15.1"
   }
 }
