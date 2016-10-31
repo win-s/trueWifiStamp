@@ -3,6 +3,7 @@
 var fs = require("fs");
 var os = require("os");
 var path = require("path");
+var jsonParser = require( path.resolve( __dirname, "node_modules","json-parser","index.js" ) );
 var transactions = require( path.resolve(__dirname,"transactions.js"));
 
 // var transactions = require( "./transactions.js");
@@ -57,7 +58,7 @@ class app{
                     console.log("Error : reading config file (config.json)");
                     return;
                 }
-                this._config = data;
+                this._config = jsonParser.parse(data.toString());
                 resolve(data);
             });
         } );
@@ -68,10 +69,10 @@ class app{
             fs.readFile( path.resolve(__dirname,'transactions.txt'), ( err, data) =>{
                 if(err){
                     reject(err);
-                    console.log("Error : reading transaction file(tranactions.txt)");
+                    console.log("Error : reading transaction file(transactions.txt)");
                     return err;
                 }
-                resolve(data);
+                resolve(data.toString().split(os.EOL));
             });
         });
         return promise;

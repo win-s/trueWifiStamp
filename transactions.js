@@ -1,7 +1,6 @@
 "use strict";
 var path = require("path");
 var moment = path.resolve(__dirname,"node_modules","moment","moment.js");
-var moment = path.resolve("moment");
 
 class transactions{
     constructor(transactionData,config){
@@ -14,6 +13,7 @@ class transactions{
     processData(){
         
     }
+    
 
 }
 module.exports = transactions;
