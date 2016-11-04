@@ -7,10 +7,11 @@ class transactions{
     constructor(transactionData,config){
         this._transactionData = transactionData;
         this._config = config;
-        this._duration = 0;
+        this._duration = [];
+        this.currDuration = null;
     }
     print(){
-
+        console.log();
     }
     processData(){
         var startDate = null;
@@ -25,16 +26,27 @@ class transactions{
             }else if(cmd === CONST.STOP){
                 if(startDate !== null){
                     stopDate = moment( date, this._config.dateTimeFormat);
-                    spentTime = moment.duration( stopDate.diff(startDate) );
-                    this._duration += spentTime.minutes();
-                    this._duration += spentTime.seconds()
+                    this.calculateDuration(startDate,stopDate);
 
-                    startDate = null;
                 }
             }
         });
     }
-    
+    _calculateDuration(startDate,stopDate){
+        var currDuration = this._duration[ this._duration.length-1 ];
+        this._isSameMonth( currDuration );
+        var spentTime = moment.duration( stopDate.diff(startDate) );
 
+        this._duration += spentTime.minutes();
+        this._duration += spentTime.seconds() > 0 ?1:0;// if seconds greater than 0 just shit up one minute
+
+        startDate = null;
+    }
+    _shiftPeriod(){
+
+    }
+    _isSameMonth(){
+        
+    }
 }
 module.exports = transactions;
