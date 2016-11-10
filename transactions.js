@@ -34,7 +34,7 @@ class transactions{
     }
     _calculateDuration(startDate,stopDate){
         var currDuration = this._duration[ this._duration.length-1 ];
-        this._isSameMonth( currDuration );
+        this._calDurationByTimeFrame(startDate,stopDate);
         var spentTime = moment.duration( stopDate.diff(startDate) );
 
         this._duration += spentTime.minutes();
@@ -45,8 +45,36 @@ class transactions{
     _shiftPeriod(){
 
     }
-    _isSameMonth(){
+    _hasNextPeriod(){
         
+    }
+    _calDurationByTimeFrame(startDate,stopDate,currDuration){
+        if(startDate >= currDuration.startPeriod){
+            if(stopDate <= currDuration.endPeriod){
+                //still in current period
+                let spentTime = moment.duration( stopDate.diff(startDate) );
+                currDuration.timeSpent += spentTime.minutes();
+                currDuration.timeSpent += spentTime.seconds() > 0 ?1:0;// if seconds greater than 0 just shit up one minute
+            }else{
+                //another current period
+                this._shiftPeriod();
+            }
+        }else{
+            this._shiftPeriod();
+        }
+    }
+    _getDurationObj(startDate){
+        var startPeriod = moment({
+                y:startDate.year(),
+                M:startDate.moment(),
+                d:this._config.startDate
+            });
+        var endPeriod = startPeriod.add('months',1).substract('days',1);
+        return {
+            startPeriod:startPeriod,
+            endPeriod:endPeriod,
+            timeSpent:0
+        };
     }
 }
 module.exports = transactions;
